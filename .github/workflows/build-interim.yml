@@ -22,7 +22,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             texlive-latex-recommended texlive-latex-extra texlive-bibtex-extra texlive-fonts-recommended \
-            texlive-science poppler-utils make perl
+            texlive-science poppler-utils make perl texlive-publishers
 
       - name: Ensure build script is executable
         run: |

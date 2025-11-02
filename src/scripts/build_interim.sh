@@ -20,6 +20,12 @@ PARENT_DIR="$(dirname "$PROJECT_ROOT")"
 AUXIL_DIR="$PARENT_DIR/auxil"
 mkdir -p "$AUXIL_DIR"
 
+BIB_SOURCE="$PROJECT_ROOT/interim_report.bib"
+BIB_DEST="$PARENT_DIR/interim_report.bib"
+if [ -f "$BIB_SOURCE" ]; then
+  cp -f "$BIB_SOURCE" "$BIB_DEST"
+fi
+
 OUTPUT_PATH="$PARENT_DIR/Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf"
 
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory="$PARENT_DIR" interim_report.tex 2>&1 | tee "$LOG_DIR/pdflatex-pass1.scripts.log"
@@ -27,12 +33,6 @@ pdflatex -interaction=nonstopmode -halt-on-error -output-directory="$PARENT_DIR"
 ORIGINAL_DIR=$(pwd)
 cd "$PARENT_DIR" || exit 1
 if [ -f interim_report.aux ]; then
-  BIB_SOURCE="$PROJECT_ROOT/interim_report.bib"
-  BIB_DEST="$PARENT_DIR/interim_report.bib"
-  if [ -f "$BIB_SOURCE" ]; then
-    cp "$BIB_SOURCE" "$BIB_DEST"
-  fi
-
   bibtex interim_report 2>&1 | tee "$LOG_DIR/bibtex.scripts.log"
 
   if [ -f "$BIB_DEST" ]; then
