@@ -4,6 +4,9 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,14 +42,6 @@ jobs:
         run: |
           TAG=$(python3 .github/scripts/version_bump.py)
           echo "tag=$TAG" >> $GITHUB_OUTPUT
-
-      - name: Create and push tag (if needed)
-        if: steps.get_tag.outputs.tag != ''
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag ${{ steps.get_tag.outputs.tag }}
-          git push origin ${{ steps.get_tag.outputs.tag }}
 
       - name: Create release (if needed)
         id: create_release
