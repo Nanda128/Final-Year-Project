@@ -1,6 +1,4 @@
 \documentclass[conference]{IEEEtran}
-\IEEEoverridecommandlockouts
-% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
@@ -23,7 +21,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     \maketitle
 
     \begin{abstract}
-        Maritime Search and Rescue operations rely on effective coordination and perfect readiness among several assets.
+        Maritime Search and Rescue(MSAR) operations rely on effective coordination and perfect readiness among several assets.
         This project proposes a modular Digital Twin framework to enable autonomous drone swarms to coordinate SAR missions in maritime environments.
         The framework seeks to integrate real-time sensor data, digital-physical system synchronization, and Human-in-the-Loop (HITL) interactions to enhance situational awareness and decision-making.
         A simulation-based approach will be employed to validate that framework, focusing on swarm coordination, Human-Computer Interaction principles, and overall situational awareness.
@@ -35,10 +33,69 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     \end{IEEEkeywords}
 
     \section{Introduction}\label{sec:introduction}
-        In 2024, the European Maritime Safety Agency (EMSA) reported over 278 Search and Rescue (SAR) Operations, a decrease of 16\% from 2023.
-        Of which, ~56\% (158 of 278) were fishing vessels, which tend to be smaller, and thus more difficult to locate in high-stress environments.
-        The same paper also states that, from 2015 to 2024, 78.8\% of investigated marine incidents and casualties involve a human element.
-    \bibliographystyle{plain}
+
+    \subsection{Context and Motivation}\label{subsec:context-and-motivation}
+    Maritime Accidents are critical emergencies where survival rate is directly correlated to response time.
+    The European Maritime Safety Agency (EMSA) reported over 278 Maritime Search and Rescue operations, of which 56\% (158 of 278) were fishing vessels.
+    These vessels tend to be smaller, and tend to struggle more when calling for help at sea~\cite{emsa2024}.
+
+    Traditional Maritime Search and Rescue(MSAR) methods face substantial limitations including difficulties with environmental estimation, resource allocation, planning, and C3I frameworks.
+    Reliance on traditional assets like vessels, helicopters, and aircraft can be difficult to maintain full operational readiness with, due to high operating costs.
+    Due to this, MSAR operations often have to grapple with difficult questions around economics, budgetary restrictions, and human cognitive loads~\cite{sar_challenges}.
+    This issue is only exacerbated in regions where governments cannot maintain those assets themselves, with MSAR often being left to ad-hoc volunteer labour.
+
+    Recent advances in Unmanned Vehicle technology and Swarm Coordination present real, transformative opportunities for Maritime SAR missions.
+    Drone swarms consisting of Unmanned Aerial Vehicles (UAVs) and/or Unmanned Surface Vessels (USVs) allow for rapidly-deployed, cost-effective, and redundant systems that could supplement traditional MSAR assets.
+    For example, a drone swarm could be deployed to help decide which specific operational areas to focus on and where to send more expensive assets like helicopters, manned vessels, and aircraft.
+    However, deploying autonomous drone swarm systems in maritime environments, usually in open ocean, requires a sophisticated C3I framework that can handle dynamic weather conditions, communication constraints, and real-time decision-making under uncertain conditions~\cite{UAV_USV_SAR}.
+
+    Digital Twin (DT) technology, which creates virtual replicas of a physical system, which enables real-time simulation and monitoring.
+    The framework that DT provides offers a promising framework for addressing the challenges in coordination that may arise when attempting to use drone swarm technology at sea~\cite{Digital_Twin_UAV}.
+    By maintaining a synchronized virtual representation of physical unmanned vehicle swarms, Digital Twins enable a user to more efficiently coordinate swarms of drones.
+    If carried out effectively, it presents an opportunity to reduce the chance for a human operator to experience cognitive overload, and still manage to provide equivalent if not increased coverage.
+    Digital Twins could also enable predictive and hypothetical situation analysis, and reducing risks for MSAR assets.
+
+    \subsection{Problem Statement}\label{subsec:problem-statement}
+    Traditional MSAR operations suffer from several critical limitations.
+
+    For instance, human operators could suffer increased cognitive overload when deployed over the sea.
+    Prior research states that, in Riverine MSAR operations~\cite{riverine_MSAR_stress}, human operators tend to suffer marked increases in response time, and difficulties locating targets.
+    The report states that MSAR crew that reported themselves as neither stressed nor exerted could locate 78\% of a group of targets deployed in a river, while crew that reported being stressed and exerted could only locate 57\% of targets.
+    In addition, maintaining full readiness for larger, human-operated assets like vessels, helicopters and aircraft can be difficult if not economically impossible in some regions, leading to delays in response time due to poor maintenance, lack of fuel, etc.
+
+    While drone solutions have been proposed and tested in real-life~\cite{multi-robot-team-MSAR}, many implementations do not use autonomous solutions, relying on a team of human operators to manage drones in a one-to-one setting.
+    When such solutions are scaled up, human operators can quickly reach cognitive overload, reducing response times.
+
+    \subsection{Proposed Solution}\label{subsec:proposed-solution}
+    This project proposes a Digital Twin Framework for Autonomous Drone Swarm Coordination with the intent of benefitting Maritime Search and Rescue operations.
+    The framework seeks to integrate the Physical, Digital, and Service Layers of MSAR missions.
+
+    It seeks to connect Autonomous Drones, usually equipped with sensors, life-saving equipment, GPS, and other communications modules, in the Physical Layer with high-fidelity virtual replicas running physics-based simulations incorporating real-time state synchronization, which would become the framework's Digital Layer.
+    Finally, in the Service Layer, the framework could utilize path planning modules, optimization engines, and even Distributed Consensus Algorithms to handle errors.
+
+    In this manner, the framework intends to enable autonomous or semi-autonomous coordination of unmanned assets while maintaining global objectives, hence reducing dependency on centralized control, and improving the fault tolerance behind the systems that make up MSAR operations.
+
+    \subsection{Research Objectives}\label{subsec:research-objectives}
+    This project aims to achieve the following objectives:
+
+    \begin{enumerate}
+        \item Develop a comprehensive Digital Twin Framework integrating UAV swarm simulation with real-time coordination algorithms.
+        \item Evaluate the practicality of implementing Distributed Consensus-Based Coordination protocols for error handling, and generating search patterns.
+        \item Design adaptive mechanisms that automatically assign tasks depending on environmental conditions and mission objectives.
+        \item Demonstrate improvement in helping reduce cognitive overload for human operators compared to traditional methods.
+    \end{enumerate}
+
+    \subsection{Report Organization}\label{subsec:report-organization}
+    The remainder of this report is to be structured as follows:
+
+    \begin{itemize}
+        \item Section II - Background Research and Literature Review surrounding Digital Twins, UAV Swarms, and MSAR
+        \item Section III - Detailed Methodology
+        \item Section IV - Project Timeline and Management Approach
+        \item Section V - Key Findings and Next Steps
+    \end{itemize}
+
+    \bibliographystyle{IEEEtran}
     \bibliography{interim_report}
 
 \end{document}

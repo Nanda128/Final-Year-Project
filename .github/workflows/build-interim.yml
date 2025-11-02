@@ -1,0 +1,54 @@
+name: Build Interim Report
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build LaTeX PDF
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install TeX Live and utilities
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-recommended texlive-latex-extra texlive-bibtex-extra texlive-fonts-recommended \
+            texlive-science poppler-utils make perl
+
+      - name: Ensure build script is executable
+        run: |
+          chmod +x src/scripts/build_interim.sh || true
+
+      - name: Run build script
+        run: |
+          set -euo pipefail
+          bash src/scripts/build_interim.sh
+
+      - name: List outputs (for debugging)
+        run: |
+          echo "Workspace root: $PWD"
+          ls -la
+          echo "Auxil dir contents (if any):"
+          ls -la auxil || true
+          echo "Scripts log dir contents (if any):"
+          ls -la src/scripts/log || true
+
+      - name: Upload generated PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: interim-pdf
+          path: |
+            Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf
+
+      - name: Upload auxil and log artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: auxil-and-logs
+          path: |
+            auxil
+            src/scripts/log
