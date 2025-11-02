@@ -34,32 +34,22 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
 
     \section{Introduction}\label{sec:introduction}
 
-    \subsection{Context and Motivation}\label{subsec:context-and-motivation}
-    Maritime Accidents are critical emergencies where survival rate is directly correlated to response time.
-    The European Maritime Safety Agency (EMSA) reported over 278 Maritime Search and Rescue operations, of which 56\% (158 of 278) were fishing vessels.
-    These vessels tend to be smaller, and tend to struggle more when calling for help at sea~\cite{emsa2024}.
+    \subsection{Motivation}\label{subsec:motivation}
+    Maritime Accidents represent time-critical humanitarian emergencies where survival rates are directly correlated with response times.
+    Traditional SAR methods face substantial limitations, such as limited search coverage, difficulties in maintaining full readiness, high operational costs, extended response times, and coordination challenges in dynamic environments~\cite{sar_challenges}.
 
-    Traditional Maritime Search and Rescue(MSAR) methods face substantial limitations including difficulties with environmental estimation, resource allocation, planning, and C3I frameworks.
-    Reliance on traditional assets like vessels, helicopters, and aircraft can be difficult to maintain full operational readiness with, due to high operating costs.
-    Due to this, MSAR operations often have to grapple with difficult questions around economics, budgetary restrictions, and human cognitive loads~\cite{sar_challenges}.
-    This issue is only exacerbated in regions where governments cannot maintain those assets themselves, with MSAR often being left to ad-hoc volunteer labour.
+    Recent advances in autonomous Unmanned Aerial Vehicle(UAVs)/Unmanned Surface Vessel(USVs) technology and swarm intelligence present real, transformative opportunities for Maritime Search and Rescue (MSAR) operations, offering rapid deployment, cost-effectiveness, and extended coverage capabilities.
+    Operating Unmanned Vehicles in Swarms allows for greater coordination, and increased redundancy in the face of potential communication and maintenance issues that may arise at sea.
+    However, managing Drone Swarms at scale remains difficult due to the limited amount of certified human operators, and concerns about human cognitive load.
 
-    Recent advances in Unmanned Vehicle technology and Swarm Coordination present real, transformative opportunities for Maritime SAR missions.
-    Drone swarms consisting of Unmanned Aerial Vehicles (UAVs) and/or Unmanned Surface Vessels (USVs) allow for rapidly-deployed, cost-effective, and redundant systems that could supplement traditional MSAR assets.
-    For example, a drone swarm could be deployed to help decide which specific operational areas to focus on and where to send more expensive assets like helicopters, manned vessels, and aircraft.
-    However, deploying autonomous drone swarm systems in maritime environments, usually in open ocean, requires a sophisticated C3I framework that can handle dynamic weather conditions, communication constraints, and real-time decision-making under uncertain conditions~\cite{UAV_USV_SAR}.
-
-    Digital Twin (DT) technology, which creates virtual replicas of a physical system, which enables real-time simulation and monitoring.
-    The framework that DT provides offers a promising framework for addressing the challenges in coordination that may arise when attempting to use drone swarm technology at sea~\cite{Digital_Twin_UAV}.
-    By maintaining a synchronized virtual representation of physical unmanned vehicle swarms, Digital Twins enable a user to more efficiently coordinate swarms of drones.
-    If carried out effectively, it presents an opportunity to reduce the chance for a human operator to experience cognitive overload, and still manage to provide equivalent if not increased coverage.
-    Digital Twins could also enable predictive and hypothetical situation analysis, and reducing risks for MSAR assets.
+    Digital Twin (DT) Technology offers a promising framework for swarm coordination.
+    By maintaining a synchronized virtual representation of physical Unmanned Vehicle swarms, DTs enable increased abstraction, easing cognitive loads on operators, in addition to potentially enabling predictive analysis, scenario-testing, and autonomous decision-making.
 
     \subsection{Problem Statement}\label{subsec:problem-statement}
     Traditional MSAR operations suffer from several critical limitations.
 
     For instance, human operators could suffer increased cognitive overload when deployed over the sea.
-    Prior research states that, in Riverine MSAR operations~\cite{riverine_MSAR_stress}, human operators tend to suffer marked increases in response time, and difficulties locating targets.
+    Prior research states that, in Riverine MSAR operations~\cite{riverine_MSAR_stress}, crew tend to suffer marked increases in response time, and difficulties locating targets.
     The report states that MSAR crew that reported themselves as neither stressed nor exerted could locate 78\% of a group of targets deployed in a river, while crew that reported being stressed and exerted could only locate 57\% of targets.
     In addition, maintaining full readiness for larger, human-operated assets like vessels, helicopters and aircraft can be difficult if not economically impossible in some regions, leading to delays in response time due to poor maintenance, lack of fuel, etc.
 
@@ -94,6 +84,32 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
         \item Section IV - Project Timeline and Management Approach
         \item Section V - Key Findings and Next Steps
     \end{itemize}
+
+    \section{Background and Literature Review}\label{sec:background-and-literature-review}
+
+    \subsection{Applications of Unmanned Vehicles in Search and Rescue Operations}\label{subsec:uav-applications-in-search-and-rescue-operations}
+    MSAR represents a time-critical, high-stakes application domain where Unmanned Vehicles have the potential to provide substantial advantages.
+    Research has demonstrated that autonomous UAVs can greatly benefit Search and Rescue operations, though it was used in SAR operations over land~\cite{waharte2010supporting}.
+    The aforementioned research also provides an analysis of search algorithms, techniques by which UAVs can be arranged to provide maximum coverage.
+
+    Search algorithms like greedy heuristics, potential-based heuristics, and Partially Observable Markov Decision Process (POMDP) approaches reduce victim detection time compared to random search approaches.
+
+    Recent work in 2024 in ~\cite{messmer2024uav} and ~\cite{UAV_USV_SAR} expanded this to practical MSAR implementations, developing a comprehensive software framework combining onboard UAV detection with ground-station processing to reduce operator visual strain.
+    It addressed critical practical challenges like bandwidth restrictions, which are typical in MSAR operations in remote areas and open ocean.
+    Their findings emphasized that practical SAR systems must be able to balance bandwidth limitations with real-time processing requirements.
+    This might require further technical advancements before it can be safely deployed in remote environments while still offering real-time data processing.
+
+    A dual-layer task planning framework proposed by recent research~\cite{YANG2025113488} integrates UAV search capabilities with human-crewed execution, in complex indoor environments.
+    It employed Coverage Path Optimization based on Clustering(CPOC) for planning the routes of UAVs, and Dynamic Guided Rapidly-Exploring Random Tree (DG-RRT*) for human navigation.
+    This approach reportedly achieved a 7.3\%-28.7\% decrease in the time taken to complete the rescue mission, compared to traditional algorithms for search and rescue typically employed.
+
+    This research proves that human-drone collaboration could demonstrate gains in efficiency over purely human missions, at least in complex indoor environments.
+
+    Finally, research exists proposing the design of an Autonomous Unmanned Vessel directly intended for MSAR missions, indicating that practical implementation is viable if certain questions around coordination can be solved.
+
+    \subsection{Autonomous Drone Swarm Coordination and Multi-Agent Systems}\label{subsec:autonomous-drone-swarm-coordination-and-multi-agent-systems}
+    Multi-Agent Swarm Coordination is an extensively studied topic in the field of robotics, and distributed systems.
+    Recent work by
 
     \bibliographystyle{IEEEtran}
     \bibliography{interim_report}
