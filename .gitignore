@@ -2,3 +2,4 @@ out/
 auxil/
 .idea/
 src/scripts/log/
+.venv/

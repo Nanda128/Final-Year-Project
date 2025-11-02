@@ -6,12 +6,13 @@ on:
 
 jobs:
   build:
-    name: Build LaTeX PDF
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install TeX Live and utilities
         run: |
@@ -29,14 +30,46 @@ jobs:
           set -euo pipefail
           bash src/scripts/build_interim.sh
 
-      - name: List outputs (for debugging)
+      - name: Ensure version script is executable
         run: |
-          echo "Workspace root: $PWD"
-          ls -la
-          echo "Auxil dir contents (if any):"
-          ls -la auxil || true
-          echo "Scripts log dir contents (if any):"
-          ls -la src/scripts/log || true
+          chmod +x .github/scripts/version_bump.py || true
+
+      - name: Determine new tag
+        id: get_tag
+        run: |
+          TAG=$(python3 .github/scripts/version_bump.py)
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Create and push tag (if needed)
+        if: steps.get_tag.outputs.tag != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag ${{ steps.get_tag.outputs.tag }}
+          git push origin ${{ steps.get_tag.outputs.tag }}
+
+      - name: Create release (if needed)
+        id: create_release
+        if: steps.get_tag.outputs.tag != ''
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.get_tag.outputs.tag }}
+          release_name: ${{ steps.get_tag.outputs.tag }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload PDF to release (if release created)
+        if: steps.get_tag.outputs.tag != ''
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf
+          asset_name: Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf
+          asset_content_type: application/pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload generated PDF
         uses: actions/upload-artifact@v4
