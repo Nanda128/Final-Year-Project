@@ -22,7 +22,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             texlive-latex-recommended texlive-latex-extra texlive-bibtex-extra texlive-fonts-recommended \
-            texlive-science poppler-utils make perl texlive-publishers
+            texlive-science poppler-utils make perl texlive-publishers jq
 
       - name: Ensure build script is executable
         run: |
@@ -54,6 +54,34 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete existing PDF asset from release (if present)
+        if: steps.get_tag.outputs.tag != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          ASSET_NAME="Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf"
+
+          echo "Looking up release for tag '${{ steps.get_tag.outputs.tag }}'..."
+          RELEASE_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.get_tag.outputs.tag }}")
+          RELEASE_ID=$(echo "$RELEASE_JSON" | jq -r .id)
+
+          if [ -z "$RELEASE_ID" ] || [ "$RELEASE_ID" = "null" ]; then
+            echo "Release not found for tag '${{ steps.get_tag.outputs.tag }}', skipping asset delete."
+            exit 0
+          fi
+
+          echo "Found release id: $RELEASE_ID. Checking assets for existing PDF..."
+          ASSET_ID=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets" | jq -r '.[] | select(.name=="'"$ASSET_NAME"'") | .id')
+
+          if [ -n "$ASSET_ID" ] && [ "$ASSET_ID" != "null" ]; then
+            echo "Deleting existing asset id $ASSET_ID (name: $ASSET_NAME)"
+            curl -s -X DELETE -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/${{ github.repository }}/releases/assets/$ASSET_ID"
+            echo "Deleted asset $ASSET_ID."
+          else
+            echo "No existing asset named '$ASSET_NAME' found in release $RELEASE_ID."
+          fi
 
       - name: Upload PDF to release (if release created)
         if: steps.get_tag.outputs.tag != ''
