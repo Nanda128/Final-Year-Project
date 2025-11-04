@@ -37,6 +37,24 @@ jobs:
         run: |
           chmod +x .github/scripts/version_bump.py || true
 
+      - name: Extract word count
+        id: get_wordcount
+        run: |
+          WORDCOUNT_FILE="src/scripts/log/wordcount.scripts.log"
+          if [ -f "$WORDCOUNT_FILE" ]; then
+            WORDCOUNT=$(grep -oP 'Word count \(PDF text\): \K\d+' "$WORDCOUNT_FILE" | tail -1)
+            if [ -n "$WORDCOUNT" ]; then
+              echo "wordcount=$WORDCOUNT" >> $GITHUB_OUTPUT
+              echo "Found word count: $WORDCOUNT"
+            else
+              echo "wordcount=unavailable" >> $GITHUB_OUTPUT
+              echo "Word count not found in log file"
+            fi
+          else
+            echo "wordcount=unavailable" >> $GITHUB_OUTPUT
+            echo "Word count log file not found"
+          fi
+
       - name: Determine new tag
         id: get_tag
         run: |
@@ -49,7 +67,8 @@ jobs:
         uses: actions/create-release@v1
         with:
           tag_name: ${{ steps.get_tag.outputs.tag }}
-          release_name: "Interim Report ${{ steps.get_tag.outputs.tag }}"
+          release_name: ${{ steps.get_tag.outputs.tag }}
+          body: "Word Count: ${{ steps.get_wordcount.outputs.wordcount }}"
           draft: false
           prerelease: false
         env:
