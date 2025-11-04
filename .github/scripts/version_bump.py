@@ -17,8 +17,10 @@ import re
 
 FILEPATH = 'src/interim_report.tex'
 
+
 def run(cmd):
     return subprocess.check_output(cmd, shell=True, text=True).strip()
+
 
 try:
     latest_tag = run("git describe --tags --abbrev=0")
@@ -56,12 +58,12 @@ section_added = any(re.search(r"\\section\s*\{", l) for l in added_lines)
 subsection_added = any(re.search(r"\\subsection\s*\{", l) for l in added_lines)
 
 if section_added:
-    new_tag = f"v{base_major}.{base_minor+1}.0"
+    new_tag = f"v{base_major}.{base_minor + 1}.0"
     print(new_tag)
     sys.exit(0)
 
 if subsection_added or any(True for _ in added_lines):
-    new_tag = f"v{base_major}.{base_minor}.{base_patch+1}"
+    new_tag = f"v{base_major}.{base_minor}.{base_patch + 1}"
     print(new_tag)
     sys.exit(0)
 
