@@ -127,9 +127,9 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     The proposed system, named EN-MASCA, demonstrated the application of Reinforcement Learning approaches to optimize formations and obstacle avoidance.
     While Reinforcement Learning approaches enable adaptive formation control, they require substantial training resources, potentially increasing costs past traditional SAR assets.
 
-    ~\cite{dev2025swarnraft} proposed another algorithm, called ``SwarmRaft``, utilized a consensus-based approach to collectively decide on the current state for real-time swarm coordination in GNSS-denied environments.
+    ~\cite{dev2025swarnraft} proposed another algorithm, called ``SwarmRaft'', utilized a consensus-based approach to collectively decide on the current state for real-time swarm coordination in GNSS-denied environments.
     By leveraging distributed consensus mechanisms, SwarmRaft allowed drones to handle the inevitable connection issues at sea, in addition to boosting redundancy when individual units experience sensor degradation or sensor loss.
-    Positioning errors can rapidly deteriorate and add onto themselves if in a GNSS-denied environment, which necessitates using onboard multi-sensor fusion, perhaps spread across the drones, to establish a common ``source of truth`` from where they can self-organize.
+    Positioning errors can rapidly deteriorate and add onto themselves if in a GNSS-denied environment, which necessitates using onboard multi-sensor fusion, perhaps spread across the drones, to establish a common ``source of truth'' from where they can self-organize.
 
     Across most literature, one of the primary motivators of creating Swarm Coordination mechanisms seems to be preventing collisions with both terrain and other drones.
     While this issue is partially mitigated when operating over open ocean, care still needs to be taken in avoiding waves, and other seaborne obstacles.
@@ -140,17 +140,17 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     In a discussion centered on Situation Awareness in the context of flight systems, ~\cite{situation_awareness} discussed that, counterintuitively, passively monitoring highly automated systems have the potential to increase mental workload rather than decrease it.
     The book argued that it allowed users (in this instance, Pilots), to abstract systems away in their minds without understanding how they work, making error detection difficult.
     Such a phenomenon can become devastating in high-stress environments, like in-flight emergencies or at sea.
-    This necessitates increased attention to interface design to maintain what the book terms ``Situation Awareness``, the operator's comprehension of relevant factors, current status, and enough background information to detect and handle errors appropriately even when stressed.
+    This necessitates increased attention to interface design to maintain what the book terms ``Situation Awareness'', the operator's comprehension of relevant factors, current status, and enough background information to detect and handle errors appropriately even when stressed.
 
     ~\cite{CUMMINGS2007339} conducted extensive research on operator workload limits in Human UAV supervision.
     Their findings will prove incredibly consequential to this project, as many of the insights achieved help provide an understanding of the average drone operator's capacity.
     Under low-workload conditions, the study proved that operators, regardless of the amount of automation, were able to be accurate and maintain full situational awareness.
     However, when under high-workload conditions, operators would adopt strategies like load-shedding, where they focus on a smaller set of drones than the ones provided, and would suffer inaccuracies as a result.
     The operators that did adopt load-shedding strategies still outperformed the ones that attempted to share their attention across all UAVs, but both categories still suffered losses in accuracy compared to low-workload situations.
-    Finally, operators with almost-fully-automated UAVs tended to place unnecessary trust on the system, content to let the computer take care of mission-critical actions with no manual cross-checking, in a phenomenon known as ``Automation Bias``.
+    Finally, operators with almost-fully-automated UAVs tended to place unnecessary trust on the system, content to let the computer take care of mission-critical actions with no manual cross-checking, in a phenomenon known as ``Automation Bias''.
 
     ~\cite{wickens2011cognitive}, at the 16th International Symposium on Aviation Psychology, helped draw up a cognitive model of UAV control.
-    It revealed that workload tends to ``spike`` right before, and during high-task phases of a mission.
+    It revealed that workload tends to ``spike'' right before, and during high-task phases of a mission.
     In the example used by the paper, operators experienced the most workload directly when they had to strike a given target.
     The report also directly corroborates many of the conclusions reached in Cummings' study.
     We can extrapolate this information to MSAR, and assume that an operator's workload is highest at the point of detection and active rescue.
@@ -225,13 +225,13 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
         \item Frustration Level - How insecure, discouraged, irritated, stressed, and annoyed were you?
     \end{itemize}
 
-    Each subscale would be rated across 21 graduations, from ``Very Low`` to ``Very High``.
+    Each subscale would be rated across 21 graduations, from ``Very Low'' to ``Very High''.
     Then, each dimension would be weighted based on pairwise comparisons to determine each dimension's importance to the overall workload.
     For instance, in the context of MSAR operations, Mental Demand and Temporal Demand may be weighted higher than Physical Demand.
 
     The overall workload score would then be calculated using the weighted average of each dimension's score.
 
-    The framework aims to a NASA-TLX score $\leq 60/100$, with the highest possible number of drones supervised by a single operator.
+    The framework aims to achieve a NASA-TLX score $\leq 60/100$, with the highest possible number of drones supervised by a single operator.
 
     \subsubsection{Operational Metrics}
     In addition to workload assessment, several operational metrics would be tracked to evaluate the effectiveness of the proposed framework.
@@ -250,7 +250,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     To validate the proposed framework, a series of simulation-based scenarios would be designed to mimic plausible scenarios during MSAR operations.
     These scenarios are intended to vary in complexity, environmental conditions, and the number of drones involved.
 
-    The first scenario would involve a simple MSAR operation under nominal conditions, intended to work as a ``control`` scenario from where the basis of comparison can be drawn.
+    The first scenario would involve a simple MSAR operation under nominal conditions, intended to work as a ``control'' scenario from where the basis of comparison can be drawn.
 
     In the next scenario, Wi-Fi communications would be progressively degraded, to force mesh networking and to test the swarm's fault tolerance.
     This scenario would act as a test for the interface and Digital Twin's ability to maintain situational awareness despite intermittent connectivity.
