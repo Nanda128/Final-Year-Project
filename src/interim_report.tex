@@ -1,12 +1,17 @@
 \documentclass[conference]{IEEEtran}
 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
 \usepackage[round]{natbib}
 
-\usepackage{amsmath,amssymb,amsfonts}
-\usepackage{algorithm}
-\usepackage{graphicx}
-\usepackage{textcomp}
-\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage[hyphens]{url}
+\usepackage{xurl}
+\providecommand{\harvardurl}[1]{\url{#1}}
+\usepackage{etoolbox}
+\AtBeginEnvironment{thebibliography}{\sloppy}
+\usepackage{hyperref}
 \newcommand{\BibTeX}{\textrm{B \kern -.05em \textsc{i \kern -.025em b} \kern -.08em
 T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
 \begin{document}
@@ -47,6 +52,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     By maintaining a synchronized virtual representation of physical Unmanned Vehicle swarms, DTs enable increased abstraction, easing cognitive loads on operators, in addition to potentially enabling predictive analysis, scenario-testing, and autonomous decision-making.
 
     Traditional SAR methods face substantial limitations, such as limited search coverage, difficulties in maintaining full readiness, high operational costs, extended response times, and coordination challenges in dynamic environments, as discussed in ~\cite{sar_challenges}.
+
     \subsection{Problem Statement}\label{subsec:problem-statement}
     Traditional MSAR operations suffer from several critical limitations.
 
@@ -175,6 +181,86 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     There is also limited work validating the effectiveness of human-swarm interface design through objective metrics like NASA-TLX\@.
 
     The project seeks to address these gaps through an integrated framework combining proven techniques from each domain, optimized specifically for MSAR operations.
+
+
+    \section{Methodology}\label{sec:methodology}
+
+    \subsection{System Architectural Overview}\label{subsec:system-architectural-overview}
+    The project seeks to propose a Digital Twin framework for Autonomous Drone Swarm Coordination that comprises 5 layers.
+
+    \begin{enumerate}
+        \item \textbf{Physical Layer:} This layer consists of the actual, real-world drones equipped with a sensor and navigation suite consisting of cameras, LiDAR, GPS modules, and Inertial.
+
+        \item \textbf{Individual Drone Autonomy Layer:} Each drone needs to be capable of autonomous global path calculation, rudimentary obstacle avoidance, and local state estimation.
+        This can be achieved using algorithms like RRT* and Dynamic Window Approach-esque systems in combination with the system's on-board sensor suite.
+
+        \item \textbf{Swarm-Level Coordination Layer:} This layer manages the collective behavior of the drone swarm.
+        It seeks to employ distributed consensus algorithms, like SwarmRaft, to establish the current state while reducing reliance on remote/ground-station communication.
+        Search area coverage can also be optimized at this layer, using techniques like Voronoi Tessellations to optimally divide the search area among individual drones.
+
+        \item \textbf{Digital Twin \& Decision Support Layer:} This layer is designed to maintain a high-fidelity virtual simulation of a physical drone swarm.
+        In this layer, predictive physics models could potentially be employed to detect anomalies, allowing alerts to be raised in critical situations.
+        The Digital Twin could act as a decision-support system, providing enough information to human operators to allow them to make informed operational decisions.
+
+        \item \textbf{Human-Swarm Interface Layer: } This layer focuses on the design of an intuitive interface that allows human operators to interact with and supervise the drone swarm in real-time.
+        The interface could potentially provide a map-based visualization of drone positions, across an operational area.
+        Using systems similar to the ones employed in glass cockpit-aircraft, the interface could provide alerts and general notifications based on priority.
+        Finally, the interface must also allow operators to specify search areas, designate high-priority areas, and, in some cases, directly intervene in individual drone operations.
+        Such an interface needs to be intuitive, to reduce cognitive load on operators.
+    \end{enumerate}
+
+    \subsection{Evaluation Methodology}\label{subsec:evaluation-methodology}
+
+    \subsubsection{Workload Assessment}
+    The primary metric used to evaluate the effectiveness of the proposed framework would be the NASA-TLX workload assessment tool.
+
+    Established by ~\cite{HART1988139}, NASA-TLX is a widely-used tool to assess perceived workload, across six dimensions:
+
+    \begin{itemize}
+        \item Mental Demand - How mentally demanding was the task?
+        \item Physical Demand - How physically demanding was the task?
+        \item Temporal Demand - How hurried or rushed was the pace of the task?
+        \item Performance - How successful were you in accomplishing what you were asked to do?
+        \item Effort - How hard did you have to work to accomplish your level of performance?
+        \item Frustration Level - How insecure, discouraged, irritated, stressed, and annoyed were you?
+    \end{itemize}
+
+    Each subscale would be rated across 21 graduations, from ``Very Low`` to ``Very High``.
+    Then, each dimension would be weighted based on pairwise comparisons to determine each dimension's importance to the overall workload.
+    For instance, in the context of MSAR operations, Mental Demand and Temporal Demand may be weighted higher than Physical Demand.
+
+    The overall workload score would then be calculated using the weighted average of each dimension's score.
+
+    The framework aims to a NASA-TLX score $\leq 60/100$, with the highest possible number of drones supervised by a single operator.
+
+    \subsubsection{Operational Metrics}
+    In addition to workload assessment, several operational metrics would be tracked to evaluate the effectiveness of the proposed framework.
+    The primary operational metrics are as follows:
+
+    \begin{itemize}
+        \item \textbf{Search Coverage Efficiency} - Percentage of the designated search area covered by the drone swarm within a specific unit of time.
+        \item \textbf{Target Detection Rate} - The number of targets detected divided by the total number of targets present in a given search area.
+        \item \textbf{Completion Time} - The total time taken to complete an MSAR mission.
+        \item \textbf{Operator Intervention Frequency} - The number of manual actions made per scenario
+        \item \textbf{Error Response Time} - The time taken between the occurrence of an error, simulated or real, and its resolution
+        \item \textbf{Misc. System Metrics} - Factors like latency, Uptime percentage, processing requirements.
+    \end{itemize}
+
+    \subsubsection{Validation Scenarios}
+    To validate the proposed framework, a series of simulation-based scenarios would be designed to mimic plausible scenarios during MSAR operations.
+    These scenarios are intended to vary in complexity, environmental conditions, and the number of drones involved.
+
+    The first scenario would involve a simple MSAR operation under nominal conditions, intended to work as a ``control`` scenario from where the basis of comparison can be drawn.
+
+    In the next scenario, Wi-Fi communications would be progressively degraded, to force mesh networking and to test the swarm's fault tolerance.
+    This scenario would act as a test for the interface and Digital Twin's ability to maintain situational awareness despite intermittent connectivity.
+    An example for the connectivity degradation pattern could be simulating a 200ms latency, with a 5-10\% packet loss rate.
+
+    Third, an emergency response scenario would be simulated, where some drones may suffer random malfunctions.
+    The operator, or the system, if applicable, would then need to respond to these emergencies.
+    This allows us to evaluate the system's error detection and handling capabilities, in addition to studying the operator's resilience in high-stress situations.
+
+    Finally, the last scenario would involve an increased number of drones, with the aim of finding the ideal number of drones an operator can supervise without exceeding our maximum NASA-TLX workload score.
 
     \bibliographystyle{agsm}
     \bibliography{interim_report}
