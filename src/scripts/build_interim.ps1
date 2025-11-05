@@ -6,8 +6,9 @@
 # This script is for Windows users, if you are on Linux or macOS, please use the corresponding shell script in build_interim.sh.
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$projectRoot = Split-Path -Parent $scriptDir
-Set-Location -Path $projectRoot
+$repoRoot = Split-Path -Parent (Split-Path -Parent $scriptDir)
+$srcDir = Join-Path $repoRoot 'src'
+Set-Location -Path $repoRoot
 
 function Get-PdfTextUsingWinRT
 {
@@ -47,55 +48,51 @@ function Get-PdfTextUsingWinRT
     }
 }
 
-$logDir = Join-Path -Path (Get-Location) -ChildPath 'scripts/log'
+$logDir = Join-Path -Path $repoRoot -ChildPath 'src/scripts/log'
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 
-$parentDir = Split-Path -Parent $projectRoot
-$auxilDir = Join-Path -Path $parentDir -ChildPath 'auxil'
+$auxilDir = Join-Path -Path $repoRoot -ChildPath 'auxil'
 New-Item -ItemType Directory -Force -Path $auxilDir | Out-Null
 
-$outputPath = Join-Path (Split-Path -Parent $projectRoot) "Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf"
+$outputPath = Join-Path $repoRoot "Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf"
 
-pdflatex -interaction=nonstopmode -halt-on-error -output-directory="$( Split-Path -Parent $projectRoot )" interim_report.tex 2>&1 | Tee-Object -FilePath (Join-Path $logDir 'pdflatex-pass1.scripts.log')
+$texPath = Join-Path $srcDir 'interim_report.tex'
+$bibPathSrc = Join-Path $srcDir 'interim_report.bib'
 
-$originalLocation = Get-Location
-try
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory="$repoRoot" "$texPath" 2>&1 | Tee-Object -FilePath (Join-Path $logDir 'pdflatex-pass1.scripts.log')
+
+if (Test-Path (Join-Path $repoRoot 'interim_report.aux'))
 {
-    Set-Location -Path (Split-Path -Parent $projectRoot)
-    if (Test-Path interim_report.aux)
+    if (Test-Path $bibPathSrc)
     {
-        $bibSource = Join-Path $projectRoot "interim_report.bib"
-        $bibDest = Join-Path (Split-Path -Parent $projectRoot) "interim_report.bib"
-        if (Test-Path $bibSource)
-        {
-            Copy-Item $bibSource $bibDest -Force
-        }
+        Copy-Item $bibPathSrc (Join-Path $repoRoot 'interim_report.bib') -Force
+    }
 
+    Push-Location $repoRoot
+    try {
         bibtex interim_report 2>&1 | Tee-Object -FilePath (Join-Path $logDir 'bibtex.scripts.log')
+    } finally {
+        Pop-Location
+    }
 
-        if (Test-Path $bibDest)
-        {
-            Remove-Item $bibDest -Force
-        }
+    if (Test-Path (Join-Path $repoRoot 'interim_report.bib'))
+    {
+        Remove-Item (Join-Path $repoRoot 'interim_report.bib') -Force
     }
 }
-finally
-{
-    Set-Location -Path $originalLocation
-}
 
-pdflatex -interaction=nonstopmode -halt-on-error -output-directory="$( Split-Path -Parent $projectRoot )" interim_report.tex 2>&1 | Tee-Object -FilePath (Join-Path $logDir 'pdflatex-pass2.scripts.log')
-pdflatex -interaction=nonstopmode -halt-on-error -output-directory="$( Split-Path -Parent $projectRoot )" interim_report.tex 2>&1 | Tee-Object -FilePath (Join-Path $logDir 'pdflatex-pass3.scripts.log')
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory="$repoRoot" "$texPath" 2>&1 | Tee-Object -FilePath (Join-Path $logDir 'pdflatex-pass2.scripts.log')
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory="$repoRoot" "$texPath" 2>&1 | Tee-Object -FilePath (Join-Path $logDir 'pdflatex-pass3.scripts.log')
 
-$tempPdfPath = Join-Path (Split-Path -Parent $projectRoot) "interim_report.pdf"
+$tempPdfPath = Join-Path $repoRoot "interim_report.pdf"
 if (Test-Path $tempPdfPath)
 {
     Move-Item $tempPdfPath $outputPath -Force
 
-    $parentAuxPath = Join-Path $parentDir "interim_report.aux"
-    $parentLogPath = Join-Path $parentDir "interim_report.log"
-    $parentBblPath = Join-Path $parentDir "interim_report.bbl"
-    $parentBlgPath = Join-Path $parentDir "interim_report.blg"
+    $parentAuxPath = Join-Path $repoRoot "interim_report.aux"
+    $parentLogPath = Join-Path $repoRoot "interim_report.log"
+    $parentBblPath = Join-Path $repoRoot "interim_report.bbl"
+    $parentBlgPath = Join-Path $repoRoot "interim_report.blg"
 
     if (Test-Path $parentAuxPath)
     {
@@ -114,7 +111,7 @@ if (Test-Path $tempPdfPath)
         Move-Item $parentBlgPath $auxilDir -Force
     }
 
-    Get-ChildItem -Path . -Include "*.out","*.toc","*.bbl","*.blg" -File -ErrorAction SilentlyContinue | Remove-Item -Force
+    Get-ChildItem -Path $repoRoot -Include "*.out","*.toc","*.bbl","*.blg" -File -ErrorAction SilentlyContinue | Remove-Item -Force
 
     $pdfWordCount = $null
     $pdfPath = $outputPath
@@ -164,6 +161,6 @@ if (Test-Path $tempPdfPath)
 }
 else
 {
-    Get-ChildItem -Path . -Include "*.aux","*.log","*.out","*.toc","*.bbl","*.blg" -File -ErrorAction SilentlyContinue | Move-Item -Destination $logDir -Force
+    Get-ChildItem -Path $repoRoot -Include "*.aux","*.log","*.out","*.toc","*.bbl","*.blg" -File -ErrorAction SilentlyContinue | Move-Item -Destination $logDir -Force
     Write-Output "PDF compilation failed. Logs: $( Resolve-Path $logDir )"
 }
