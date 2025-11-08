@@ -89,8 +89,8 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
 
     \begin{itemize}
         \item Section II - Background Research and Literature Review surrounding Digital Twins, UAV Swarms, and MSAR
-        \item Section III - Detailed Methodology
-        \item Section IV - Project Timeline and Management Approach
+        \item Section III - Methodology
+        \item Section IV - Project Timeline and Constraints
         \item Section V - Key Findings and Next Steps
     \end{itemize}
 
@@ -212,7 +212,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     \subsection{Evaluation Methodology}\label{subsec:evaluation-methodology}
 
     \subsubsection{Workload Assessment}
-    The primary metric used to evaluate the effectiveness of the proposed framework would be the NASA-TLX workload assessment tool.
+    The primary metric used to evaluate the effectiveness of the proposed framework's cognitive load management would be the NASA-TLX workload assessment tool.
 
     Established by ~\cite{HART1988139}, NASA-TLX is a widely-used tool to assess perceived workload, across six dimensions:
 
@@ -233,7 +233,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
 
     The framework aims to achieve a NASA-TLX score $\leq 60/100$, with the highest possible number of drones supervised by a single operator.
 
-    \subsubsection{Operational Metrics}
+    \subsubsection{Operational Metrics}\label{subsubsec:operational-metrics}
     In addition to workload assessment, several operational metrics would be tracked to evaluate the effectiveness of the proposed framework.
     The primary operational metrics are as follows:
 
@@ -246,7 +246,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
         \item \textbf{Misc. System Metrics} - Factors like latency, Uptime percentage, processing requirements.
     \end{itemize}
 
-    \subsubsection{Validation Scenarios}
+    \subsubsection{Validation Scenarios}\label{subsubsec:validation-scenarios}
     To validate the proposed framework, a series of simulation-based scenarios would be designed to mimic plausible scenarios during MSAR operations.
     These scenarios are intended to vary in complexity, environmental conditions, and the number of drones involved.
 
@@ -261,6 +261,105 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     This allows us to evaluate the system's error detection and handling capabilities, in addition to studying the operator's resilience in high-stress situations.
 
     Finally, the last scenario would involve an increased number of drones, with the aim of finding the ideal number of drones an operator can supervise without exceeding our maximum NASA-TLX workload score.
+
+
+    \section{Project Timeline and Constraints}\label{sec:project-timeline-and-constraints}
+
+    \subsection{Project Timeline}\label{subsec:project-timeline}
+
+    \subsubsection{Week 1-4: Literature Review}\label{subsubsec:literature-review}
+    The project will begin with a deep survey of Digital Twins, Drone-Swarm coordination, Maritime SAR\@.
+    This time will be used to define the use cases of the project and the system scope.
+
+    \textbf{Key Deliverables}: Interim Report, Simulator Setup, Baseline Workload Assessment
+
+    \subsubsection{Weeks 4-8: Architectural design of Twin}\label{subsubsec:architectural-design-of-twin}
+
+    Define the module’s technical requirements, and architecture.
+    Place effective foundations that can be worked on long-term.
+    This is also where coupling schemes are decided on.
+
+    \textbf{Key Deliverables}: Digital Twin architecture foundation, simulated outputs from physical infrastructure by creating sample API inputs
+
+    \subsubsection{Weeks 8-12: Digital Twin Base Models \& Simulation Environment Setup}\label{subsubsec:digital-twin-base-models-&-simulation-environment-setup}
+
+    Implement baseline swarm coordination schemes, and their virtual models.
+    Create ``real'' (simulated) states that can be fed to the twin, which allows the twin to work on predicting simulations.
+
+    Decide on physical real-world simulation, and integration strategies.
+    Additionally, decide on how the Digital Twin can optimize future coordination, e.g.\ letting the twin optimize future trajectories, reassigning tasks, and error handling.
+
+    \textbf{Key Deliverables}: User Interface, Sample API Input Handling, additional features as decided above.
+
+    \subsubsection{Weeks 12-16: Integration and Stress Testing}\label{subsubsec:-integration-and-stress-testing}
+
+    Decide on if integrating the Digital Twin model with a physical real-world example is feasible.
+    Create a set of challenging maritime SAR “missions” to stress test the system.
+    This must include aspects like dispersed targets, intermittent communication, and drone failures.
+
+    \textbf{Key Deliverables}: Mission Simulation, Testing Framework, with multiple scenarios as lined out in Section~\ref{subsubsec:validation-scenarios}
+
+    \subsubsection{Weeks 16-20: Refinement and Metrics}\label{subsubsec:refinement-and-metrics}
+
+    Collect metrics like latency, and coverage time to compare “twin-assisted” simulated SAR missions vs.\ ``manual'' ones.
+    These results will be analysed statistically in the report.
+
+    \textbf{Key Deliverables}: Metric collection system, using metrics defined in Section~\ref{subsubsec:operational-metrics}, notes comparing standard MSAR missions to simulation.
+
+    \subsubsection{Weeks 20-25: Write Paper}\label{subsubsec:write-paper}
+
+    Compose chapters and refine notes taken into a proper report.
+    Include an intro, related work, methodology, experiments, results, discussion, and conclusion.
+    After writing the first draft, the paper must be revised and reviewed.
+    Time can be taken to fix weak points in experiments and refine narrative.
+
+    \textbf{Key Deliverables}: Final Year Project Report, prepare code for submission
+
+    \subsection{Constraints}\label{subsec:constraints}
+
+    \subsubsection{Technical Constraints}
+
+    While not all MSAR operations happen over open ocean, this framework would seek to be able to handle open-ocean conditions.
+    ~\cite{s21082848} states that, for Command and Control, ``a 200 kbps uplink data rate,a packet error rate of less than 0.1\%, and network latency less than 50 ms is required''.
+    When attempting to use commercial LTE networks, the paper noted that the system suffered a 94ms delay for both uplink and downlink, on the ground.
+    We can reasonably predict that these issues would only be exacerbated on open ocean.
+
+    Another issue that may be encountered during deployment may be issues with onboard processing.
+    The DJI Matrice 400, released by ~\cite{DJI_Matrice400_Specs}, a recently-released drone at the time of writing, despite being expensive, only has 8GB RAM, with 128GB of UFS storage, in addition to any extra SD cards inserted by the user.
+    Since the performance is relatively limited, even in more expensive units, care needs to be taken to ensure onboard systems don't exceed a drone's computational limit.
+
+    Finally, another technical constraint to be worked around is the performance of individual sensors.
+    Sensor failure must be directly handled at all times during deployment, given varying levels of severity depending on failure.
+
+    \subsubsection{Operational Constraints}
+
+    Testing the system in real-world deployments would be logistically impossible given the scope of this project, but it does pose an interesting subject to perform future studies on.
+    In a real-world deployment, testing drones in maritime environments would encounter significant logistical issues, especially in failure conditions where drone recovery may be difficult.
+
+    Regulatory agencies like EASA put forward specific restrictions on the use of drones in maritime and over-land conditions.
+    Any Unmanned Aerial System heavier than 250g, as per ~\cite{open_category_easa}, requires specific certifications to operate.
+    Due to this, it would be ideal to perform initial User tests with trained and certified operators, which may skew measurements away.
+
+    \subsubsection{Ethical \& Safety Constraints}
+
+    To protect critical infrastructure, protect national assets, and for safety reasons, a wide variety of places in countries are blocked off from Drone Access.
+    While avoiding these areas can be easily enforced using onboard geo-awareness systems, care must be taken to ensure that the framework is fully legally compliant.
+    For example, the User Interface must be able to clearly mark red-zones for movement and suggest alternate, safer paths should emergencies occur.
+
+    It should also be necessary for all operational decisions to involve human support and assent.
+    Autonomous engagement should only occur when due to direct interaction from a human operator, and the system must be able to quickly follow human intervention.
+
+    An important ethical constraint faced by this program would be creating a data processing workflow.
+    Since drones would be equipped with sensor suites, any data saved from those sensors would fall under GDPR protection, in the EU\@.
+    Since the framework has no use for recorded data, steps must be taken to transparently delete data after it is no longer relevant, in addition to anonymizing records of previous incidents.
+
+    Maritime SAR, usually being a time-sensitive operation, requires extensive verification and failure detection.
+    While a false positive may cause a distraction that may go on to be devastating for search efforts, a false negative can be more harmful.
+    To mitigate this, human-operators must be involved in the loop, especially in cases where targets have been found.
+
+    Finally, a significant aspect of this system will be ensuring it can be trusted by the average user.
+    Disclaimers need to be made clearly stating that this system seeks to supplement MSAR assets, and cannot work as a replacement.
+    In addition, it may be imperfect and subject to issues with detection, and that all decisions must be made with human-operator approval.
 
     \bibliographystyle{agsm}
     \bibliography{interim_report}
