@@ -107,8 +107,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf
-          asset_name: Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf
+          asset_path: Interim_FYP-DT-MSAR_23070854.pdf
+          asset_name: Interim_FYP-DT-MSAR_23070854.pdf
           asset_content_type: application/pdf
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -118,7 +118,7 @@ jobs:
         with:
           name: interim-pdf
           path: |
-            Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf
+            Interim_FYP-DT-MSAR_23070854.pdf
 
       - name: Upload auxil and log artifacts
         uses: actions/upload-artifact@v4
