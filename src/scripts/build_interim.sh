@@ -26,7 +26,7 @@ if [ -f "$BIB_SOURCE" ]; then
   cp -f "$BIB_SOURCE" "$BIB_DEST"
 fi
 
-OUTPUT_PATH="$PARENT_DIR/Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf"
+OUTPUT_PATH="$PARENT_DIR/Interim_FYP-DT-MSAR_23070854.pdf"
 
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory="$PARENT_DIR" interim_report.tex 2>&1 | tee "$LOG_DIR/pdflatex-pass1.scripts.log"
 

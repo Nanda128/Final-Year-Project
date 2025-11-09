@@ -54,7 +54,7 @@ New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 $auxilDir = Join-Path -Path $repoRoot -ChildPath 'auxil'
 New-Item -ItemType Directory -Force -Path $auxilDir | Out-Null
 
-$outputPath = Join-Path $repoRoot "Interim_FYP-Digital Twin Framework for Autonomous Drone Swarm Coordination in Maritime SAR Operations.pdf"
+$outputPath = Join-Path $repoRoot "Interim_FYP-DT-MSAR_23070854.pdf"
 
 $texPath = Join-Path $srcDir 'interim_report.tex'
 $bibPathSrc = Join-Path $srcDir 'interim_report.bib'
@@ -69,9 +69,12 @@ if (Test-Path (Join-Path $repoRoot 'interim_report.aux'))
     }
 
     Push-Location $repoRoot
-    try {
+    try
+    {
         bibtex interim_report 2>&1 | Tee-Object -FilePath (Join-Path $logDir 'bibtex.scripts.log')
-    } finally {
+    }
+    finally
+    {
         Pop-Location
     }
 
