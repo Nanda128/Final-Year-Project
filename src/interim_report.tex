@@ -28,10 +28,10 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
 
     \begin{abstract}
         Maritime Search and Rescue (MSAR) operations rely on effective coordination and operational readiness among several assets.
-        This project proposes a modular Digital Twin framework to enable autonomous drone swarms to coordinate SAR missions in maritime environments.
+        This project proposes a modular Digital Twin framework to enable autonomous drone swarms to coordinate SAR (Search and Rescue) missions in maritime environments.
         The framework seeks to integrate real-time sensor data, digital-physical system synchronization, and Human-in-the-Loop (HITL) interactions to enhance situational awareness and decision-making.
         A simulation-based approach will be employed to validate that framework, focusing on swarm coordination, Human-Computer Interaction principles, and overall situational awareness.
-        This work seeks to address the critical gap between centralized SAR systems and decentralized autonomous operations, with the aim of improving response times and increasing readiness by enabling the utilization of more economic assets.
+        This work seeks to address the critical gap between centralised SAR systems and decentralised autonomous operations, with the aim of improving response times and increasing readiness by enabling the utilization of more economic assets.
     \end{abstract}
 
     \begin{IEEEkeywords}
@@ -42,14 +42,18 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     \section{Introduction}\label{sec:introduction}
 
     \subsection{Motivation}\label{subsec:motivation}
-    Maritime accidents constitute time-critical humanitarian emergencies in which survival rates correlate directly with response times.
+    Search and Rescue missions constitute time-critical humanitarian emergencies in which survival rates correlate directly with response times.
+    \cite{doi:10.1580/06-WEME-OR-035R1.1} states that the probability of survival decreases significantly after the first 17 hours.
 
-    Recent advances in autonomous Unmanned Aerial Vehicle (UAV) and Unmanned Surface Vessel (USV) technologies, combined with swarm intelligence, present transformative opportunities.
-    Operating Unmanned Vehicles in Swarms allows for greater coordination, and increased redundancy in the face of potential communication and maintenance issues that may arise at sea.
+    Recent advances in autonomous Unmanned Aerial Vehicle (UAV) and Unmanned Surface Vessel (USV) technologies, combined with together with decentralised cooperative control and collective coordination methods, present an opportunity to transform MSAR\@.
+    \cite{MESHCHERYAKOV201914} cites that Unmanned Vehicles in Swarms allows for greater coordination, and increased redundancy in the face of potential communication and maintenance issues that may arise at sea.
     However, managing Drone Swarms at scale remains difficult due to the limited amount of certified human operators, and concerns about human cognitive load.
 
-    Digital Twin (DT) Technology offers a promising framework for swarm coordination.
-    By maintaining a synchronized virtual representation of physical Unmanned Vehicle swarms, DTs enable increased abstraction, easing cognitive loads on operators, in addition to potentially enabling predictive analysis, scenario-testing, and autonomous decision-making.
+    Digital Twins (DTs) are virtual replicas of physical systems that enable real-time monitoring, simulation and analysis.
+    ~\cite{HAAG201864} provides a Proof-of-Concept for a Digital Twin system.
+
+    DTs offer a promising framework for swarm coordination.
+    By maintaining a synchronized virtual representation of physical Unmanned Vehicle swarms, DTs could enable increased abstraction, easing cognitive loads on operators, in addition to potentially enabling predictive analysis, scenario-testing, and autonomous decision-making.
 
     Traditional SAR methods face substantial limitations, such as limited search coverage, difficulties in maintaining full readiness, high operational costs, extended response times, and coordination challenges in dynamic environments, as discussed in ~\cite{sar_challenges}.
 
@@ -79,7 +83,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     Finally, the interface layer allows human-swarm communication, where the human inputs mission parameters and objectives, and supervises the drone swarm.
     The operator should also be able to intervene and direct individual drones at any time.
 
-    In this manner, the framework intends to enable autonomous or semi-autonomous coordination of unmanned assets while maintaining global objectives, hence reducing dependency on centralized control, and improving the fault tolerance behind the systems that make up MSAR operations.
+    In this manner, the framework intends to enable autonomous or semi-autonomous coordination of unmanned assets while maintaining global objectives, hence reducing dependency on centralised control, and improving the fault tolerance behind the systems that make up MSAR operations.
 
     \subsection{Research Objectives}\label{subsec:research-objectives}
     This project aims to achieve the following objectives:
@@ -109,15 +113,15 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     \citet{waharte2010supporting} demonstrated that autonomous UAVs can significantly enhance Search and Rescue operations, albeit in a terrestrial context.
     The aforementioned research also provides an analysis of search algorithms, techniques by which UAVs can be arranged to provide maximum coverage.
 
-    Search algorithms like greedy heuristics, potential-based heuristics, and Partially Observable Markov Decision Process (POMDP) approaches reduce victim detection time compared to random search approaches.
+    The same report also analyses how algorithms like greedy heuristics, potential-based heuristics, and Partially Observable Markov Decision Process (POMDP) could reduce victim detection time compared to random search approaches.
 
-    ~\cite{messmer2024uav,UAV_USV_SAR} expanded this technology to practical MSAR implementations, developing a comprehensive software framework combining onboard UAV detection with ground-station processing to reduce operator strain.
+    ~\cite{messmer2024uav,UAV_USV_SAR} expanded the use of Drone Swarms in Search and Rescue to practical MSAR implementations, developing a comprehensive software framework combining onboard UAV detection with ground-station processing to reduce operator strain.
     They addressed critical practical challenges like bandwidth restrictions, which are typical in MSAR operations in remote areas such as open ocean.
     Their findings emphasized that practical SAR systems must be able to balance bandwidth limitations with real-time processing requirements.
     This might require further technical advancements before it can be safely deployed in remote environments while still offering real-time data processing.
 
     ~\cite{YANG2025113488} proposes a dual-layer task planning framework integrating UAV search capabilities with human-crewed execution, in complex indoor environments.
-    It employed Coverage Path Optimization based on Clustering(CPOC) for planning the routes of UAVs, and Dynamic Guided Rapidly-Exploring Random Tree (DG-RRT*) for human navigation.
+    It employed Coverage Path Optimization based on Clustering (CPOC) for planning the routes of UAVs, and Dynamic Guided Rapidly-Exploring Random Tree abbreviated as ``DG-RRT*'' for human navigation.
     This approach reportedly achieved a 7.3\%-28.7\% decrease in the time taken to complete the rescue mission, compared to traditional algorithms for search and rescue typically employed.
 
     This research proves that human-drone collaboration could demonstrate gains in efficiency over purely human missions, at least in complex indoor environments.
@@ -129,7 +133,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     Swarm coordination draws inspiration from biological systems, including insect colonies, fish schools, and bird flocks.
     Although intended more for Computer Animation, ~\cite{10.1145/37402.37406} helped inform the basis for most swarm coordination technology.
 
-    The implementation of Swarm Coordination requires distributed algorithms that enable autonomous self-organization without centralized control failure points, to prevent issues like midair collisions and sensor overlap.
+    The implementation of Swarm Coordination requires distributed algorithms that enable autonomous self-organization without centralised control failure points, to prevent issues like midair collisions and overlapping sensor coverage.
     Systems such as EN-MASCA, proposed by ~\cite{ENMASCA2025}, although designed for Durian Orchards, represent a real-world implementation of Autonomous Drone Swarm Coordination.
     The proposed system, named EN-MASCA, demonstrated the application of Reinforcement Learning approaches to optimize formations and obstacle avoidance.
     While Reinforcement Learning approaches enable adaptive formation control, they require substantial training resources, potentially increasing costs past traditional SAR assets.
@@ -156,14 +160,15 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     The operators that did adopt load-shedding strategies still outperformed the ones that attempted to share their attention across all UAVs, but both categories still suffered losses in accuracy compared to low-workload situations.
     Finally, operators with almost-fully-automated UAVs tended to place unnecessary trust on the system, content to let the computer take care of mission-critical actions with no manual cross-checking, in a phenomenon known as ``Automation Bias''.
 
-    ~\cite{wickens2011cognitive}, at the 16th International Symposium on Aviation Psychology, helped draw up a cognitive model of UAV control.
+    ~\cite{wickens2011cognitive}, helped draw up a cognitive model of UAV control.
     It revealed that workload tends to ``spike'' right before, and during high-task phases of a mission.
     In the example used by the paper, operators experienced the most workload directly when they had to strike a given target.
     The report also directly corroborates many of the conclusions reached in Cummings' study.
-    We can extrapolate this information to MSAR, and assume that an operator's workload is highest at the point of detection and active rescue.
+
+    This information can then be extrapolated to MSAR, and assume that an operator's workload is highest at the point of detection and active rescue.
     The model predicts the performance of multitasks based on resource allocation, and task priority.
 
-    Overall, research indicates that operators of human-supervised swarms require highly specialized interfaces enabling them to perform the following:
+    In conclusion, this research indicates that operators of human-supervised swarms require highly specialized interfaces enabling them to perform the following:
 
     \begin{itemize}
         \item Define Task Priority
@@ -180,8 +185,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     Few frameworks simultaneously integrate swarm autonomy, digital twin state management, and specific human-swarm interfaces optimized for MSAR missions.
     This forces potential research to make assumptions, extrapolating from existing data to draw conclusions, and even needing entirely new bodies of research to facilitate this.
 
-    Most research into drone swarms and human factors assume high-bandwidth communication, which is usually impossible in MSAR scenarios.
-    This necessitates intelligent information prioritization, fault-tolerant mechanisms, and helpful ways to fill in data gaps from inevitable connectivity issues.
+    Due to the inevitable connectivity and bandwidth problems that may occur over remote areas and oceans, the framework needs intelligent information prioritization, fault-tolerant mechanisms, and helpful ways to fill in data gaps.
 
     An important gap for the purposes of this project was also the lack of quantifiable measures of cognitive load during swarm supervision.
     Limited work establishes a concrete ratio of human-operator-to-drones, as such a measure would be difficult to maintain across several people with different management styles.
@@ -217,6 +221,11 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     \end{enumerate}
 
     \subsection{Evaluation Methodology}\label{subsec:evaluation-methodology}
+
+    To evaluate the effectiveness of the proposed framework, a combination of operational metrics, and workload assessments would be employed.
+    These metrics would help determine both the system's performance in MSAR tasks and the cognitive load experienced by human operators.
+
+    To capture these metrics, a series of simulation-based scenarios would be designed to mimic plausible situations during MSAR operations.
 
     \subsubsection{Workload Assessment}
     The primary metric used to evaluate the effectiveness of the proposed framework's cognitive load management would be the NASA-TLX workload assessment tool.
@@ -257,6 +266,8 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     To validate the proposed framework, a series of simulation-based scenarios would be designed to mimic plausible scenarios during MSAR operations.
     These scenarios are intended to vary in complexity, environmental conditions, and the number of drones involved.
 
+    These scenarios were chosen to progressively test the system's capacity, starting from nominal conditions to more challenging situations involving communication degradation, emergency responses, and increased agent quantity.
+
     The first scenario would involve a simple MSAR operation under nominal conditions, intended to work as a ``control'' scenario from where the basis of comparison can be drawn.
 
     In the next scenario, Wi-Fi communications would be progressively degraded, to force mesh networking and to test the swarm's fault tolerance.
@@ -265,7 +276,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
 
     Third, an emergency response scenario would be simulated, where some drones may suffer random malfunctions.
     The operator, or the system, if applicable, would then need to respond to these emergencies.
-    This allows us to evaluate the system's error detection and handling capabilities, in addition to studying the operator's resilience in high-stress situations.
+    These scenarios allow effective evaluation of the system's error detection and handling capabilities, in addition to studying the operator's resilience in high-stress situations.
 
     Finally, the last scenario would involve an increased number of drones, with the aim of finding the ideal number of drones an operator can supervise without exceeding our maximum NASA-TLX workload score.
 
@@ -327,7 +338,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     \subsubsection{Technical Constraints}
 
     While not all MSAR operations happen over open ocean, this framework would seek to be able to handle open-ocean conditions.
-    ~\cite{s21082848} states that, for Command and Control, ``a 200 kbps uplink data rate,a packet error rate of less than 0.1\%, and network latency less than 50 ms is required''.
+    ~\cite{s21082848} states that, for Command and Control, ``a 200 kbps uplink data rate,a packet error rate of less than 0.1\%, and network latency less than 50 ms is required''~\cite[p.13]{s21082848}.
     When attempting to use commercial LTE networks, the paper noted that the system suffered a 94ms delay for both uplink and downlink, on the ground.
     We can reasonably predict that these issues would only be exacerbated on open ocean.
 
